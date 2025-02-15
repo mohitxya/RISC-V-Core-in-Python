@@ -52,31 +52,49 @@ class RiscVEmulator:
         imm = instruction>>20
         return opcode, rd, funct3, rs1, rs2, funct7, imm
         
-        def execute(self,opcode,rd,funct3,rs1,rs2,funct7, imm):
-            if opcode==OPCODES['LUI']:
-                # used to load a 20-bit immediate value into the upper 20 bits of a destination # register, while setting the lower 12 bits to zero. 
-                # load upper intermediate.
-                self.registers[rd]=imm<<12
-            elif opcode==OPCODES['AUIPC']:
-                self.pc+= self.pc + (imm<<12)
-                # add upper intermediate to PC. 
-            elif opcode==OPCODES['JAL']:
-                self.registers[rd]=self.pc
-                self.pc+=imm
-            elif opcode==OPCODES['ALU_IMM']:
-                if funct3==FUNCT3_CODES['ADD_SUB']:
-                    self.registers[rd]=self.registers[rs1]+imm
+    def execute(self,opcode,rd,funct3,rs1,rs2,funct7, imm):
+        if opcode==OPCODES['LUI']:
+            # used to load a 20-bit immediate value into the upper 20 bits of a destination # register, while setting the lower 12 bits to zero. 
+            # load upper intermediate.
+            self.registers[rd]=imm<<12
+        elif opcode==OPCODES['AUIPC']:
+            self.pc+= self.pc + (imm<<12)
+            # add upper intermediate to PC. 
+        elif opcode==OPCODES['JAL']:
+            self.registers[rd]=self.pc
+            self.pc+=imm
+        elif opcode==OPCODES['ALU_IMM']:
+            if funct3==FUNCT3_CODES['ADD_SUB']:
+                self.registers[rd]=self.registers[rs1]+imm
 
-                # could add more ALU operations
-            elif opcode==OPCODES['ALU_REG']:
-                if funct3==FUNCT3_CODES['ADD_SUB']:
-                    if funct7==0b0000000:
-                        self.registers[rd]=self.registers[rs1]+self.registers[rs2]
-                    elif funct7==0b0100000:
-                        self.registers[rd]=self.registers[rs1]-self.registers[rs2]
-                # to do: add more alu instructions.
+            # could add more ALU operations
+        elif opcode==OPCODES['ALU_REG']:
+            if funct3==FUNCT3_CODES['ADD_SUB']:
+                if funct7==0b0000000:
+                    self.registers[rd]=self.registers[rs1]+self.registers[rs2]
+                elif funct7==0b0100000:
+                    self.registers[rd]=self.registers[rs1]-self.registers[rs2]
+        elif opcode==OPCODES['LOAD']:
+            if funct3==0b010:
+                self.registers[rd]=self.read_memory(self.registers[rs1] + imm, 4)
+        elif opcode==OPCODES['STORE']:
+            if funct3==0b010:
+                self.write_memory(self.registers[rs1] + imm, self,registers[rs2],4)
+        elif opcode==OPCODES['BRANCH']:
+            offset=(imm<<1)
+            if funct3==0b000: #BEQ
+                if self.registers[rs1]==self.registers[rs2]:
+                    self.pc+=offset
+            elif funct3 == 0b001: #BNE
+                if self.registers[rs1] != self.registers[rs2]:
+                    self.pc+=offset
     def read_memory(self, address, size):
         value=0
         for i in range(size):
-            value 
+            value |=self.memory[address + i]<<(i*8)
+        return value
+    def write_memory(self,address, value, size):
+        for i in range(size):
+            self.memory[address+i]=(value>>(i*8))&0xFF
+    
 
