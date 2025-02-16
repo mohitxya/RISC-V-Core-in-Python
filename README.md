@@ -1,3 +1,5 @@
+todo: implement a 5 stage pipeline, implement JIT 
+
 ## Defining the RISC-V Instruction Set  
 - **Basic RV32I Instructions**  
 - **Adding Support for Floating-Point Instructions (F-extension)**  
