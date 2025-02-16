@@ -3,7 +3,8 @@
 - implement JIT
 - track cycles 
 - Create a web interface 
-- Add more instructions 
+- Add more instructions
+- Create an assembler
 
 ## Defining the RISC-V Instruction Set  
 - **Basic RV32I Instructions**  
