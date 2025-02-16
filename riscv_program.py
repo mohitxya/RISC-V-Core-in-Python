@@ -34,7 +34,7 @@ program2=[0x00500513,  # ADDI x10, x0, 5    (x10 = 5)
     0x00150513,   
 ]
 if __name__ == '__main__':
-    from riscv_emulator import RiscVEmulator
+    from riscv_emulator_v1 import RiscVEmulator
     emulator = RiscVEmulator()
     emulator.load_program(program2)
     emulator.run()
