@@ -1,4 +1,9 @@
-todo: implement a 5 stage pipeline, implement JIT 
+### todo: 
+implement a 5 stage pipeline
+implement JIT
+track cycles 
+Create a web interface 
+Add more instructions 
 
 ## Defining the RISC-V Instruction Set  
 - **Basic RV32I Instructions**  
