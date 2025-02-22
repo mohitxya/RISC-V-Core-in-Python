@@ -1,6 +1,6 @@
 ### todo: 
 - implement a 5 stage pipeline
-- implement JIT
+- Add instruction format detection
 - track cycles 
 - Create a web interface 
 - Add more instructions
