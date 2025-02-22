@@ -36,7 +36,7 @@ program2=[0x00500513,  # ADDI x10, x0, 5    (x10 = 5)
 if __name__ == '__main__':
     from riscv_emulator_v1 import RiscVEmulator
     emulator = RiscVEmulator()
-    emulator.load_program(program2)
+    emulator.load_program(program)
     emulator.run()
     # Check results
     print(f'Register x12 (should be 11): {emulator.registers[12]}')

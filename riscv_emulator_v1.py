@@ -1,4 +1,4 @@
-
+from mpipe import OrderedStage, Pipeline
 
 OPCODES ={'LUI': 0b0110111,
     'AUIPC': 0b0010111,
@@ -113,6 +113,8 @@ class RiscVEmulator:
         for stage in pipeline_stages:
             print(f"Executing stage: {stage}")
     def jit_compile(instruction):
+        pass
+    def branch_prediction():
         pass
     def run(self):
         while self.pc < len(self.memory):  # Ensure we don’t read beyond memory
